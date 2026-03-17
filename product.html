@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product</title>
+</head>
+
+<body style="font-family:Arial; padding:20px;">
+
+<div id="box"></div>
+
+<button onclick="order()">🛒 Add to Cart</button>
+<button onclick="whatsapp()">💬 WhatsApp</button>
+
+<script>
+let products = JSON.parse(localStorage.getItem("products"));
+let id = localStorage.getItem("view");
+
+let p = products.find(x => x.id == id);
+
+document.getElementById("box").innerHTML = `
+  <h2>${p.name}</h2>
+  <img src="${p.image}" width="250"><br><br>
+  <h3>৳ ${p.price}</h3>
+`;
+
+function order(){
+  localStorage.setItem("cart", JSON.stringify(p));
+  location.href = "order.html";
+}
+
+function whatsapp(){
+  let msg = `I want to buy: ${p.name} (৳${p.price})`;
+  window.open(`https://wa.me/8801849841494?text=${encodeURIComponent(msg)}`);
+}
+</script>
+
+</body>
+</html>

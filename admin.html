@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin</title>
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<body style="font-family:Arial; padding:20px;">
+
+<h2>Admin Panel</h2>
+
+<input id="name" placeholder="Product Name"><br><br>
+<input id="price" placeholder="Price"><br><br>
+<input id="image" placeholder="Image URL"><br><br>
+
+<button onclick="add()">Add Product</button>
+
+<h3>Products</h3>
+<div id="list"></div>
+
+<script>
+let products = JSON.parse(localStorage.getItem("products")) || [];
+
+function add(){
+  let p = {
+    id: Date.now(),
+    name: name.value,
+    price: price.value,
+    image: image.value
+  };
+  products.push(p);
+  localStorage.setItem("products", JSON.stringify(products));
+  show();
+}
+
+function del(id){
+  products = products.filter(p => p.id != id);
+  localStorage.setItem("products", JSON.stringify(products));
+  show();
+}
+
+function show(){
+  let html = "";
+  products.forEach(p=>{
+    html += `
+      <p>
+        ${p.name} - ৳${p.price}
+        <button onclick="del(${p.id})">❌</button>
+      </p>
+    `;
+  });
+  document.getElementById("list").innerHTML = html;
+}
+
+show();
+</script>
+
+</body>
+</html>
